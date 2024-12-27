@@ -28,6 +28,18 @@ class _ExpensesState extends State<Expenses> {
         amount: 40.0,
         date: DateTime.now())
   ];
+  void addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+  }
+
+  void removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +50,9 @@ class _ExpensesState extends State<Expenses> {
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
-                  builder: (c) => const NewExpense(),
+                  builder: (ctx) => NewExpense(
+                    onAddExpense: addExpense,
+                  ),
                 );
               },
               icon: const Icon(Icons.add))
@@ -48,9 +62,11 @@ class _ExpensesState extends State<Expenses> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('.....'),
             Expanded(
-              child: ExpensesList(expenses: _registeredExpenses),
+              child: ExpensesList(
+                expenses: _registeredExpenses,
+                onRemoveExpense: removeExpense,
+              ),
             )
           ],
         ),
