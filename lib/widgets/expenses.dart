@@ -1,3 +1,4 @@
+import 'package:expenses/chart/chart.dart';
 import 'package:expenses/modles/expense.dart';
 import 'package:expenses/widgets/expanses_list/expanses_list.dart';
 import 'package:expenses/widgets/new_expense.dart';
@@ -62,6 +63,7 @@ class _ExpensesState extends State<Expenses> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Chart(expenses: _registeredExpenses),
             Expanded(
               child: ExpensesList(
                 expenses: _registeredExpenses,
@@ -72,5 +74,23 @@ class _ExpensesState extends State<Expenses> {
         ),
       ),
     );
+  }
+}
+
+class ExpenseBucket {
+  ExpenseBucket({required this.category, required this.expenses});
+  final Category category;
+  final List<Expense> expenses;
+  ExpenseBucket.forCategory(
+      {required List<Expense> allExpenses, required this.category})
+      : expenses = allExpenses
+            .where((element) => element.category == category)
+            .toList();
+  double get totalExpenses {
+    double sum = 0;
+    for (var expense in expenses) {
+      sum += expense.amount;
+    }
+    return sum;
   }
 }
