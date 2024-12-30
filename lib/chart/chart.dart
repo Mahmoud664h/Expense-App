@@ -1,6 +1,5 @@
 import 'package:expenses/chart/chart_bar.dart';
 import 'package:expenses/modles/expense.dart';
-import 'package:expenses/widgets/expenses.dart';
 import 'package:flutter/material.dart';
 
 class Chart extends StatelessWidget {

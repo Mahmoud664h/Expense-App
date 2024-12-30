@@ -43,6 +43,16 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    Widget mainContent = const Center(
+      child: Text('No Espenses found'),
+    );
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        expenses: _registeredExpenses,
+        onRemoveExpense: removeExpense,
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Expense Tracker')),
@@ -60,37 +70,26 @@ class _ExpensesState extends State<Expenses> {
         ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Chart(expenses: _registeredExpenses),
-            Expanded(
-              child: ExpensesList(
-                expenses: _registeredExpenses,
-                onRemoveExpense: removeExpense,
+        child: width < 600
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Chart(expenses: _registeredExpenses),
+                  Expanded(
+                    child: mainContent,
+                  )
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(child: Chart(expenses: _registeredExpenses)),
+                  Expanded(
+                    child: mainContent,
+                  )
+                ],
               ),
-            )
-          ],
-        ),
       ),
     );
-  }
-}
-
-class ExpenseBucket {
-  ExpenseBucket({required this.category, required this.expenses});
-  final Category category;
-  final List<Expense> expenses;
-  ExpenseBucket.forCategory(
-      {required List<Expense> allExpenses, required this.category})
-      : expenses = allExpenses
-            .where((element) => element.category == category)
-            .toList();
-  double get totalExpenses {
-    double sum = 0;
-    for (var expense in expenses) {
-      sum += expense.amount;
-    }
-    return sum;
   }
 }
