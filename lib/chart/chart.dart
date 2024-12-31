@@ -37,7 +37,7 @@ class Chart extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.all(16),
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-          height: constraint.maxHeight * 0.12,
+          height: constraint.maxHeight * 0.5,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               gradient: LinearGradient(colors: [
@@ -58,31 +58,26 @@ class Chart extends StatelessWidget {
                     ),
                 ],
               )),
-              constraint.minHeight < 200
-                  ? Container()
-                  : const SizedBox(
-                      height: 12,
-                    ),
-              constraint.minHeight < 200
-                  ? Container()
-                  : Row(
-                      children: buckets
-                          .map((e) => Expanded(
-                                  child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 4),
-                                child: Icon(
-                                  categoryIcon[e.category],
-                                  color: isDarkMode
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .primary
-                                          .withOpacity(0.7),
-                                ),
-                              )))
-                          .toList(),
-                    )
+              const SizedBox(
+                height: 12,
+              ),
+              Row(
+                children: buckets
+                    .map((e) => Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Icon(
+                            categoryIcon[e.category],
+                            color: isDarkMode
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.7),
+                          ),
+                        )))
+                    .toList(),
+              )
             ],
           ),
         );

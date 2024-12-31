@@ -82,18 +82,14 @@ class _ExpensesState extends State<Expenses> {
                   )
                 ],
               )
-            : SizedBox(
-                height: double.infinity,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(child: Chart(expenses: _registeredExpenses)),
-                    Expanded(
-                      child: mainContent,
-                    )
-                  ],
-                ),
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: Chart(expenses: _registeredExpenses)),
+                  Expanded(
+                    child: mainContent,
+                  )
+                ],
               ),
       ),
     );
