@@ -45,7 +45,7 @@ class _ExpensesState extends State<Expenses> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     Widget mainContent = const Center(
-      child: Text('No Espenses found'),
+      child: Text('No Expenses found'),
     );
     if (_registeredExpenses.isNotEmpty) {
       mainContent = ExpensesList(
@@ -60,6 +60,8 @@ class _ExpensesState extends State<Expenses> {
           IconButton(
               onPressed: () {
                 showModalBottomSheet(
+                  useSafeArea: true,
+                  isScrollControlled: true,
                   context: context,
                   builder: (ctx) => NewExpense(
                     onAddExpense: addExpense,
@@ -74,20 +76,24 @@ class _ExpensesState extends State<Expenses> {
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Chart(expenses: _registeredExpenses),
-                  Expanded(
-                    child: mainContent,
-                  )
-                ],
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
                   Expanded(child: Chart(expenses: _registeredExpenses)),
                   Expanded(
                     child: mainContent,
                   )
                 ],
+              )
+            : SizedBox(
+                height: double.infinity,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(child: Chart(expenses: _registeredExpenses)),
+                    Expanded(
+                      child: mainContent,
+                    )
+                  ],
+                ),
               ),
       ),
     );
